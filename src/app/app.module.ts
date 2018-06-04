@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
+import { BarCodeReaderModule } from '../components/bar-code-reader/bar-code-reader.module';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -14,6 +16,7 @@ import { HomePage } from '../pages/home/home';
   ],
   imports: [
     BrowserModule,
+    BarCodeReaderModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
