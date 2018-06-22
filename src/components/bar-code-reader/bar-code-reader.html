@@ -1,4 +1,4 @@
-<ion-contect padding>
+<ion-content padding>
   <div>
    <label>Type text to encode</label>
    <ion-input #text type="text" value=""></ion-input>
@@ -7,9 +7,14 @@
   <div>
    <button ion-button block (click)="scan()">Scan</button>
    <div *ngIf="scannedData.text">
-    <label>Your barcode is</label>
+    <label>Your scanedbarcode is</label>
     <br>
     <span>{{scannedData.text}}</span>
    </div>
+   <div *ngIf="encodedData.text">
+     <label>Your encoded data is</label>
+     <br>
+     <span>{{encodedData.text}}</span>¡
+   </div>
   </div>
-</ion-contect>
+</ion-content>

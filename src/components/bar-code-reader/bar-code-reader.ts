@@ -7,12 +7,10 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 })
 export class BarCodeReaderComponent {
 
-  endcodedData: any = {};
+  encodedData: any = {};
   scannedData: any = {};
 
   constructor(private barcodeScanner: BarcodeScanner) {
-
-
   }
 
   public scan() {
@@ -21,6 +19,7 @@ export class BarCodeReaderComponent {
     };
     this.barcodeScanner.scan(options).then(data => {
       this.scannedData = data;
+      console.log('Datos escaneados: ', data);
     }).catch(err => {
       console.log('Error al escanear', err);
     });
@@ -29,7 +28,8 @@ export class BarCodeReaderComponent {
   public encodeText(text) {
     let type:string = this.barcodeScanner.Encode.TEXT_TYPE;
     this.barcodeScanner.encode(type, text).then(data => {
-      this.endcodedData = data;
+      this.encodedData = data;
+      console.log('Datos encodeados: ', data);
     }).catch(err => {
       console.log('Error al encodear', err);
     });

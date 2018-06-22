@@ -27,7 +27,7 @@ import { BarCodeReaderModule } from '../components/bar-code-reader/bar-code-read
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}

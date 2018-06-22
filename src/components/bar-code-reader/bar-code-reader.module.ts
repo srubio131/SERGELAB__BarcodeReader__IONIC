@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from 'ionic-angular';
 
+import { BarcodeReaderProviders } from './bar-code-reader.providers';
 import { BarCodeReaderComponent } from './bar-code-reader';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+
 
 @NgModule({
   declarations: [
-  BarCodeReaderComponent
+    BarCodeReaderComponent
   ],
-  providers: [
-    BarcodeScanner
-  ],
+  providers: BarcodeReaderProviders.getProviders(),
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule
   ],
   exports: [
     BarCodeReaderComponent
   ]
   })
-export class BarCodeReaderModule {
-  }
+export class BarCodeReaderModule {}
