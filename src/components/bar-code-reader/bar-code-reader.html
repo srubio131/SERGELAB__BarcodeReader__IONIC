@@ -10,6 +10,8 @@
     <label>Your scanedbarcode is</label>
     <br>
     <span>{{scannedData.text}}</span>
+    <br>
+    <ion-img [src]="scannedData.text"></ion-img>
    </div>
    <div *ngIf="encodedData.text">
      <label>Your encoded data is</label>
