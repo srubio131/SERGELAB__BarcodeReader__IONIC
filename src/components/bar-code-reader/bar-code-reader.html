@@ -6,17 +6,14 @@
   </div>
   <div>
    <button ion-button block (click)="scan()">Scan</button>
-   <div *ngIf="scannedData.text">
+   <div *ngIf="scannedData.srcBase64">
     <label>Your scanedbarcode is</label>
-    <br>
-    <span>{{scannedData.text}}</span>
-    <br>
-    <ion-img [src]="scannedData.text"></ion-img>
+    <img [src]="scannedData.srcBase64">
    </div>
-   <div *ngIf="encodedData.text">
+   <div *ngIf="encodedData.srcBase64">
      <label>Your encoded data is</label>
      <br>
-     <span>{{encodedData.text}}</span>¡
+     <span>{{encodedData.srcBase64}}</span>¡
    </div>
   </div>
 </ion-content>
