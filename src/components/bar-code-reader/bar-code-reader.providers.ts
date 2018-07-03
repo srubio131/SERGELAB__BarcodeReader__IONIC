@@ -1,8 +1,5 @@
-import { ErrorHandler } from '@angular/core';
-import { IonicErrorHandler } from 'ionic-angular';
-
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
-import { Camera } from '@ionic-native/camera';
+import { CameraPreview, CameraPreviewOptions } from '@ionic-native/camera-preview';
 
 /********************
  *   Mocks
@@ -29,14 +26,18 @@ class BarcodeScannerMock extends BarcodeScanner {
     })
   }
 }
- 
-class CameraMock extends Camera {
-  getPicture(options) {
-    return new Promise((resolve, reject) => {
-      resolve("BASE_64_ENCODED_DATA_GOES_HERE");
+
+class CameraPreviewMock extends CameraPreview {
+  startCamera(cameraPreviewOpts?: CameraPreviewOptions) {
+    return new Promise<any>((resolve, reject) => {
+      let data = {
+        camera: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASIAAAEiAQMAAABncE31AAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABB0lEQVRoge3YzQ2DMAyGYUsMwEhZPSMxABJN7IRETUQvmErt+x34fThZ2AERQggh/5OjZC9Hca1XIspb2cmaVKyb/gbKU61al733WjDUgyoH9RVVT1HPKd3pvW2xCvU3UI6qTeQyFT7MbdRtqku4uIdyUOmdEGtFEvTtkLQZPMpDpVbUrix2ZA8JylsFvZJnQa6Lnmp7Qj2g8jsRNpE2jOWsFcpT2SLUWpEtifTJ8esXdbvq/Ln2n/Uv1P3qKNmlNqVZZ0K5qKi79gGgi6Nt6EwoD9X+uOW62HyQ5b1CKE/V/W6+qBDKSZUKTaYCykXpri6ExuKg/NQ5kdtqaLJeRTkoQgghv54Xi7p8LsFRHbsAAAAASUVORK5CYII="
+      };
+      resolve(data);
     })
   }
 }
+
 
 /********************
  *   AppProviders
@@ -49,14 +50,14 @@ export class BarcodeReaderProviders {
         if(document.URL.includes('https://') || document.URL.includes('http://')) { 
           // Use browser providers
           providers = [
-            { provide: Camera, useClass: CameraMock },
+            { provide: CameraPreview, useClass: CameraPreviewMock },
             { provide: BarcodeScanner, useClass: BarcodeScannerMock }
           ];
  
         } else {
           // Use device providers
           providers = [
-            Camera,
+            CameraPreview,
             BarcodeScanner
           ];
         } 

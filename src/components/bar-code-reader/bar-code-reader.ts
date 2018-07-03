@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { CameraPreview, CameraPreviewOptions } from '@ionic-native/camera-preview';
 
 @Component({
   selector: 'bar-code-reader',
@@ -10,19 +11,36 @@ export class BarCodeReaderComponent {
   encodedData: any = {};
   scannedData: any = {};
 
-  constructor(private _barcodeScanner: BarcodeScanner) {
+  constructor(private _barcodeScanner: BarcodeScanner, 
+              private _cameraPreview: CameraPreview
+  ) {
 
-    // Prueba de escaneo
-    this.scan();
+    // Start preview
+    const cameraPreviewOpts: CameraPreviewOptions = {
+      x: 0,
+      y: 0,
+      width: window.screen.width,
+      height: window.screen.height,
+      camera: 'rear',
+      tapPhoto: false,
+      previewDrag: true,
+      toBack: true,
+      alpha: 1
+    };
+    // start camera
+    this._cameraPreview.startCamera(cameraPreviewOpts).then(
+      (res) => {
+        this.scan();
+        console.log("ok: " + res)
+      },
+      (err) => {
+        console.log("err: " + err)
+      });
 
   }
 
   public scan() {
-    let options: BarcodeScannerOptions = {
-      prompt: 'Scan you barcode'
-    };
-    this._barcodeScanner.scan(options).then(data => {
-
+    this._barcodeScanner.scan().then(data => {
       this.scannedData = {};
       if (data && data.text) {
         this.scannedData = {
