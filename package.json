@@ -18,10 +18,10 @@
     "@angular/forms": "5.2.10",
     "@angular/platform-browser": "5.2.10",
     "@angular/platform-browser-dynamic": "5.2.10",
-    "@ionic-native/barcode-scanner": "^4.9.0",
-    "@ionic-native/camera-preview": "^4.9.0",
-    "@ionic-native/core": "^4.9.0",
-    "@ionic-native/diagnostic": "^4.9.0",
+    "@ionic-native/barcode-scanner": "^4.9.1",
+    "@ionic-native/camera-preview": "^4.9.1",
+    "@ionic-native/core": "^4.9.1",
+    "@ionic-native/diagnostic": "^4.9.1",
     "cordova-android": "7.0.0",
     "cordova-plugin-camera-preview": "^0.10.0",
     "cordova-plugin-device": "^2.0.2",
@@ -43,7 +43,7 @@
     "cordova-android-support-gradle-release": "^1.4.4",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project",
+  "description": "Lector de códigos de barra y códigos QR",
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},
@@ -53,7 +53,7 @@
       "cordova-plugin-camera-preview": {},
       "cordova.plugins.diagnostic": {},
       "cordova-android-support-gradle-release": {
-        "ANDROID_SUPPORT_VERSION": "27"
+        "ANDROID_SUPPORT_VERSION": "25.+"
       }
     },
     "platforms": [
