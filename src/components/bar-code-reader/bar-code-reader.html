@@ -1,0 +1,19 @@
+<ion-content padding>
+  <div>
+   <label>Type text to encode</label>
+   <ion-input #text type="text" value=""></ion-input>
+   <button ion-button block (click)="encodeText(text)">Encode</button>
+  </div>
+  <div>
+   <button ion-button block (click)="scan()">Scan</button>
+   <div *ngIf="scannedData.srcBase64">
+    <label>Your scanedbarcode is</label>
+    <img [src]="scannedData.srcBase64">
+   </div>
+   <div *ngIf="encodedData.srcBase64">
+     <label>Your encoded data is</label>
+     <br>
+     <span>{{encodedData.srcBase64}}</span>¡
+   </div>
+  </div>
+</ion-content>
