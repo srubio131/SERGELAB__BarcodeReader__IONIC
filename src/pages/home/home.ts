@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Diagnostic } from '@ionic-native/diagnostic';
 import { NavController, ToastController } from 'ionic-angular';
-import { forkJoin } from 'rxjs/observable/forkJoin';
+//import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   selector: 'page-home',
@@ -12,15 +11,15 @@ export class HomePage {
   allPermissionsOk: boolean = false;
 
   constructor(public navCtrl: NavController, 
-              public toastCtrl: ToastController, 
-              private _diagnostic: Diagnostic
+              public toastCtrl: ToastController 
+              //private _diagnostic: Diagnostic
   ) {
-    
-    this.isAllPermissionsOk();
+    this.allPermissionsOk = true;
+    //this.isAllPermissionsOk();
 
   }
 
-  public isAllPermissionsOk() {
+  /*public isAllPermissionsOk() {
     // TODO. Se pueden añadir mas separadas por comas
     forkJoin(this._diagnostic.isCameraAuthorized())
     .subscribe(results => {
@@ -47,6 +46,6 @@ export class HomePage {
         ).present();
       }
     });
-  }
+  }*/
 
 }

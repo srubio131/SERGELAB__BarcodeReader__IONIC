@@ -1,10 +1,10 @@
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
-import { CameraPreview, CameraPreviewOptions } from '@ionic-native/camera-preview';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { Observable } from '../../../node_modules/rxjs/Observable';
 
 /********************
  *   Mocks
  ********************/
-class BarcodeScannerMock extends BarcodeScanner {
+/*class BarcodeScannerMock extends BarcodeScanner {
   scan(options?:BarcodeScannerOptions) {
     return new Promise<any>((resolve, reject) => {
       let data = {
@@ -36,7 +36,37 @@ class CameraPreviewMock extends CameraPreview {
       resolve(data);
     })
   }
-}
+}*/
+
+class QRScannerMock extends QRScanner {
+  prepare() {
+    return new Promise<QRScannerStatus>((resolve, reject) => {
+      let data: QRScannerStatus = {
+        authorized: false,
+        denied: false,
+        restricted: false,
+        prepared: false,
+        showing: false,
+        scanning: false,
+        previewing: false,
+        lightEnabled: false,
+        canOpenSettings: false,
+        canEnableLight: false,
+        canChangeCamera: false,
+        currentCamera: 0          // Back
+      };
+      resolve(data);
+    });
+  }
+  scan() {
+    return new Observable<string>((observer) => {
+      observer.next("Texto leido");
+      observer.complete();
+      observer.error();
+    });
+  }
+};
+
 
 
 /********************
@@ -50,15 +80,13 @@ export class BarcodeReaderProviders {
         if(document.URL.includes('https://') || document.URL.includes('http://')) { 
           // Use browser providers
           providers = [
-            { provide: CameraPreview, useClass: CameraPreviewMock },
-            { provide: BarcodeScanner, useClass: BarcodeScannerMock }
+            { provide: QRScanner, useClass: QRScannerMock },
           ];
  
         } else {
           // Use device providers
           providers = [
-            CameraPreview,
-            BarcodeScanner
+            QRScanner
           ];
         } 
         return providers;

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { CameraPreview, CameraPreviewOptions } from '@ionic-native/camera-preview';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 
 @Component({
   selector: 'bar-code-reader',
@@ -8,69 +7,46 @@ import { CameraPreview, CameraPreviewOptions } from '@ionic-native/camera-previe
 })
 export class BarCodeReaderComponent {
 
-  encodedData: any = {};
+  //encodedData: any = {};
   scannedData: any = {};
+  scanSub:any = {};
 
-  constructor(private _barcodeScanner: BarcodeScanner, 
-              private _cameraPreview: CameraPreview
-  ) {
+  constructor(private _qrScanner: QRScanner) {
 
-    // Start preview
-    const cameraPreviewOpts: CameraPreviewOptions = {
-      x: 0,
-      y: 0,
-      width: window.screen.width,
-      height: window.screen.height,
-      camera: 'rear',
-      tapPhoto: false,
-      previewDrag: true,
-      toBack: true,
-      alpha: 1
-    };
-    // start camera
-    this._cameraPreview.startCamera(cameraPreviewOpts).then(
-      (res) => {
-        this.scan();
-        console.log("ok: " + res)
-      },
-      (err) => {
-        console.log("err: " + err)
-      });
+    // Request the permission early
+    this._qrScanner.prepare()
+    .then((status: QRScannerStatus) => {
+      if (status.authorized) {
+        // camera permission was granted
+
+        this._qrScanner.hide(); // hide camera preview
+
+        // start scanning
+        this.scanSub = this._qrScanner.scan().subscribe((text: string) => {
+          console.log('Scanned something', text);
+
+          this._qrScanner.show();
+          //this._qrScanner.hide(); // hide camera preview
+        });
+
+      } else if (status.denied) {
+        // camera permission was permanently denied
+        // you must use QRScanner.openSettings() method to guide the user to the settings page
+        // then they can grant the permission from there
+        this._qrScanner.openSettings();
+      } else {
+        // permission was denied, but not permanently. You can ask for permission again at a later time.
+      }
+    })
+    .catch((e: any) => console.log('Error is', e));
 
   }
 
-  public scan() {
-    this._barcodeScanner.scan().then(data => {
-      this.scannedData = {};
-      if (data && data.text) {
-        this.scannedData = {
-          format: data.format,
-          cancelled: data.cancelled,
-          srcBase64: data.text
-        };
-      }
-
-    }).catch(err => {
-      console.log('Error al escanear', err);
-    });
-  }
-
-  public encodeText(text) {
-    let type:string = this._barcodeScanner.Encode.TEXT_TYPE;
-    this._barcodeScanner.encode(type, text).then(data => {
-
-      this.encodedData = {};
-      if (data && data.text) {
-        this.encodedData = {
-          format: data.format,
-          cancelled: data.cancelled,
-          srcBase64: data.text
-        };
-      }
-
-    }).catch(err => {
-      console.log('Error al encodear', err);
-    });
+  stopPreview() {
+    //if (this.scanSub) {
+      //this.scanSub.unsubscribe();
+      this._qrScanner.pausePreview();
+   // }
   }
 
 }

@@ -1,16 +1,3 @@
 <ion-content padding>
-  <ng-container *ngIf = 'allPermissionsOk' ? #permissionOK : #permissionKO></ng-container>
+    <bar-code-reader></bar-code-reader>
 </ion-content>
-
-
-
-<!-- Templates -->
-<ng-template #permissionOK>
-  <bar-code-reader></bar-code-reader>
-</ng-template>
-
-<ng-template #permissionKO>
-  <div>
-    Amig@..Acepta los permisos!!
-  </div>
-</ng-template>
